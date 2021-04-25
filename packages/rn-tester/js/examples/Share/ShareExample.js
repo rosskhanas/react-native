@@ -12,13 +12,25 @@
 
 const React = require('react');
 
-const {StyleSheet, View, Text, Button, Share} = require('react-native');
+const {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  PlatformColor,
+  Share,
+} = require('react-native');
 
 const shareMessage = () => {
-  Share.share({
-    message: ('Our top priority for React Native is to match the expectations people have for each platform. This is why React Native renders to platform primitives. We value native look-and-feel over cross-platform consistency.' +
-      'For example, the TextInput in React Native renders to a UITextField on iOS. This ensures that integration with password managers and keyboard controls work out of the box. By using platform primitives, React Native apps are also able to stay up-to-date with design and behavior changes from new releases of Android and iOS.': string),
-  });
+  Share.share(
+    {
+      message: ('Our top priority for React Native is to match the expectations people have for each platform. This is why React Native renders to platform primitives. We value native look-and-feel over cross-platform consistency.' +
+        'For example, the TextInput in React Native renders to a UITextField on iOS. This ensures that integration with password managers and keyboard controls work out of the box. By using platform primitives, React Native apps are also able to stay up-to-date with design and behavior changes from new releases of Android and iOS.': string),
+    },
+    {
+      tintColor: 'green',
+    },
+  );
 };
 
 const shareText = () => {
@@ -33,7 +45,7 @@ const shareText = () => {
       subject: 'MUST READ: Massive Scale',
       dialogTitle: 'Share React Native Blog',
       excludedActivityTypes: ['com.apple.UIKit.activity.PostToTwitter'],
-      tintColor: 'blue',
+      tintColor: PlatformColor('systemGreenColor'),
     },
   );
 };

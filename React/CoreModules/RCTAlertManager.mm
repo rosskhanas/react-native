@@ -81,6 +81,7 @@ RCT_EXPORT_METHOD(alertWithArgs : (JS::NativeAlertManager::Args &)args callback 
   NSString *cancelButtonKey = [RCTConvert NSString:args.cancelButtonKey()];
   NSString *destructiveButtonKey = [RCTConvert NSString:args.destructiveButtonKey()];
   UIKeyboardType keyboardType = [RCTConvert UIKeyboardType:args.keyboardType()];
+  UIColor *tintColor = [RCTConvert UIColor:args.tintColor()];
 
   if (!title && !message) {
     RCTLogError(@"Must specify either an alert title, or message, or both");
@@ -184,6 +185,8 @@ RCT_EXPORT_METHOD(alertWithArgs : (JS::NativeAlertManager::Args &)args callback 
     _alertControllers = [NSHashTable weakObjectsHashTable];
   }
   [_alertControllers addObject:alertController];
+
+  [alertController.view setTintColor:tintColor];
 
   dispatch_async(dispatch_get_main_queue(), ^{
     [alertController show:YES completion:nil];

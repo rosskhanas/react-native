@@ -72,7 +72,9 @@ const ActionSheetIOS = {
 
     const processedTintColor = processColor(tintColor);
     invariant(
-      processedTintColor == null || typeof processedTintColor === 'number',
+      processedTintColor == null ||
+        typeof processedTintColor === 'number' ||
+        typeof processedTintColor === 'object',
       'Unexpected color given for ActionSheetIOS.showActionSheetWithOptions tintColor',
     );
     RCTActionSheetManager.showActionSheetWithOptions(

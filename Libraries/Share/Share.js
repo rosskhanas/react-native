@@ -14,6 +14,8 @@ const Platform = require('../Utilities/Platform');
 
 const invariant = require('invariant');
 const processColor = require('../StyleSheet/processColor');
+import type {ColorValue} from '../StyleSheet/StyleSheet';
+import type {ProcessedColorValue} from '../StyleSheet/processColor';
 
 import NativeActionSheetManager from '../ActionSheetIOS/NativeActionSheetManager';
 import NativeShareModule from './NativeShareModule';
@@ -32,7 +34,7 @@ type Content =
 type Options = {
   dialogTitle?: string,
   excludedActivityTypes?: Array<string>,
-  tintColor?: string,
+  tintColor?: ColorValue | ProcessedColorValue,
   subject?: string,
   ...
 };
@@ -118,7 +120,9 @@ class Share {
         const tintColor = processColor(options.tintColor);
 
         invariant(
-          tintColor == null || typeof tintColor === 'number',
+          tintColor == null ||
+            typeof tintColor === 'number' ||
+            typeof tintColor === 'object',
           'Unexpected color given for options.tintColor',
         );
 
@@ -133,7 +137,7 @@ class Share {
               typeof content.message === 'string' ? content.message : undefined,
             url: typeof content.url === 'string' ? content.url : undefined,
             subject: options.subject,
-            tintColor: typeof tintColor === 'number' ? tintColor : undefined,
+            tintColor,
             excludedActivityTypes: options.excludedActivityTypes,
           },
           error => reject(error),

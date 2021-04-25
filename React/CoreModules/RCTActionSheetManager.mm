@@ -93,7 +93,7 @@ RCT_EXPORT_METHOD(showActionSheetWithOptions
 
   UIViewController *controller = RCTPresentedViewController();
   NSNumber *anchor = [RCTConvert NSNumber:options.anchor() ? @(*options.anchor()) : nil];
-  UIColor *tintColor = [RCTConvert UIColor:options.tintColor() ? @(*options.tintColor()) : nil];
+  UIColor *tintColor = [RCTConvert UIColor:options.tintColor()];
 
   if (controller == nil) {
     RCTLogError(@"Tried to display action sheet but there is no application window. options: %@", @{
@@ -233,7 +233,7 @@ RCT_EXPORT_METHOD(showShareActionSheetWithOptions
       };
 
   NSNumber *anchorViewTag = [RCTConvert NSNumber:options.anchor() ? @(*options.anchor()) : nil];
-  shareController.view.tintColor = [RCTConvert UIColor:options.tintColor() ? @(*options.tintColor()) : nil];
+  shareController.view.tintColor = [RCTConvert UIColor:options.tintColor()];
 
 #if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && defined(__IPHONE_13_0) && \
     __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0

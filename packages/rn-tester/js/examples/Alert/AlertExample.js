@@ -10,7 +10,14 @@
 'use strict';
 
 import React, {useState} from 'react';
-import {Alert, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {
+  Alert,
+  PlatformColor,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+} from 'react-native';
 
 // Shows log on the screen
 const Log = ({message}) =>
@@ -165,23 +172,30 @@ const AlertWithStyles = () => {
       <TouchableHighlight
         style={styles.wrapper}
         onPress={() =>
-          Alert.alert('Styled Buttons!', alertMessage, [
+          Alert.alert(
+            'Styled Buttons!',
+            alertMessage,
+            [
+              {
+                text: 'Default',
+                onPress: () => setMessage('Default Pressed!'),
+                style: 'default',
+              },
+              {
+                text: 'Cancel',
+                onPress: () => setMessage('Cancel Pressed!'),
+                style: 'cancel',
+              },
+              {
+                text: 'Destructive',
+                onPress: () => setMessage('Destructive Pressed!'),
+                style: 'destructive',
+              },
+            ],
             {
-              text: 'Default',
-              onPress: () => setMessage('Default Pressed!'),
-              style: 'default',
+              tintColor: PlatformColor('systemGreenColor'),
             },
-            {
-              text: 'Cancel',
-              onPress: () => setMessage('Cancel Pressed!'),
-              style: 'cancel',
-            },
-            {
-              text: 'Destructive',
-              onPress: () => setMessage('Destructive Pressed!'),
-              style: 'destructive',
-            },
-          ])
+          )
         }>
         <View style={styles.button}>
           <Text>Tap to view alert</Text>

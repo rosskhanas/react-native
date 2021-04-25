@@ -12,6 +12,7 @@
 
 const React = require('react');
 const {
+  PlatformColor,
   StyleSheet,
   View,
   Text,
@@ -103,6 +104,8 @@ class PromptOptions extends React.Component<Props, State> {
               this.saveResponse,
               undefined,
               'Default value',
+              undefined,
+              'green',
             )
           }>
           <View style={styles.button}>
@@ -119,6 +122,8 @@ class PromptOptions extends React.Component<Props, State> {
               this.customButtons,
               'login-password',
               'admin@site.com',
+              undefined,
+              PlatformColor('systemGreenColor'),
             )
           }>
           <View style={styles.button}>

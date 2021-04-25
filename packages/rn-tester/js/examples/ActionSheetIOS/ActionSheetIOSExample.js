@@ -19,6 +19,7 @@ const {
   Alert,
   NativeModules,
   findNodeHandle,
+  PlatformColor,
 } = require('react-native');
 const ScreenshotManager = NativeModules.ScreenshotManager;
 
@@ -51,6 +52,7 @@ class ActionSheetExample extends React.Component<Props, State> {
         options: BUTTONS,
         cancelButtonIndex: CANCEL_INDEX,
         destructiveButtonIndex: DESTRUCTIVE_INDEX,
+        tintColor: PlatformColor('systemGreenColor'),
       },
       buttonIndex => {
         this.setState({clicked: BUTTONS[buttonIndex]});

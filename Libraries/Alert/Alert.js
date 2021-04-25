@@ -11,6 +11,12 @@
 'use strict';
 
 import Platform from '../Utilities/Platform';
+
+const invariant = require('invariant');
+const processColor = require('../StyleSheet/processColor');
+import type {ColorValue} from '../StyleSheet/StyleSheet';
+import type {ProcessedColorValue} from '../StyleSheet/processColor';
+
 import NativeDialogManagerAndroid, {
   type DialogOptions,
 } from '../NativeModules/specs/NativeDialogManagerAndroid';
@@ -31,6 +37,7 @@ export type Buttons = Array<{
 
 type Options = {
   cancelable?: ?boolean,
+  tintColor?: ColorValue | ProcessedColorValue,
   onDismiss?: ?() => void,
   ...
 };
@@ -48,7 +55,15 @@ class Alert {
     options?: Options,
   ): void {
     if (Platform.OS === 'ios') {
-      Alert.prompt(title, message, buttons, 'default');
+      Alert.prompt(
+        title,
+        message,
+        buttons,
+        'default',
+        undefined,
+        undefined,
+        options?.tintColor,
+      );
     } else if (Platform.OS === 'android') {
       if (!NativeDialogManagerAndroid) {
         return;
@@ -109,6 +124,7 @@ class Alert {
     type?: ?AlertType = 'plain-text',
     defaultValue?: string,
     keyboardType?: string,
+    tintColor?: ColorValue | ProcessedColorValue,
   ): void {
     if (Platform.OS === 'ios') {
       let callbacks = [];
@@ -133,6 +149,14 @@ class Alert {
         });
       }
 
+      const processedTintColor = processColor(tintColor);
+      invariant(
+        processedTintColor == null ||
+          typeof processedTintColor === 'number' ||
+          typeof processedTintColor === 'object',
+        'Unexpected color given for Alert.prompt tintColor',
+      );
+
       RCTAlertManager.alertWithArgs(
         {
           title: title || '',
@@ -143,6 +167,7 @@ class Alert {
           cancelButtonKey,
           destructiveButtonKey,
           keyboardType,
+          tintColor: processedTintColor,
         },
         (id, value) => {
           const cb = callbacks[id];
